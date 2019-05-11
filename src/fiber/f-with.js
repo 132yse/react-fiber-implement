@@ -1,22 +1,8 @@
 import { scheduleWork } from './scheduler';
-import * as Status from '../shared/status-work';
-import {
-  Update as UpdateEffect
-} from '../shared/effect-tag';
-import { isObject } from '../shared/validate';
 import {
   NoEffect as NoHookEffect,
-  UnmountSnapshot,
-  UnmountMutation,
-  MountMutation,
-  MountLayout,
-  UnmountPassive,
-  MountPassive,
 } from '../shared/with-effect';
 
-//test
-import { withState } from '../core/with-state';
-import { lifeCycle } from '../core/life-cycle';
 // The work-in-progress fiber. I've named it differently to distinguish it from
 // the work-in-progress hook.
 let currentlyRenderingFNode = null;
@@ -328,7 +314,7 @@ export function withReducer(initialState) {
     const val1 = arr1[i];
     const val2 = arr2[i];
     if (
-      (val1 === val2 && (val1 !== 0 || 1 / val1 === 1 / (val2: any))) ||
+      (val1 === val2 && (val1 !== 0 || 1 / val1 === 1 / (val2))) ||
       (val1 !== val1 && val2 !== val2) // eslint-disable-line no-self-compare
     ) {
       continue;

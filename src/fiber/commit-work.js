@@ -141,16 +141,6 @@ export function commitPlacement(finishedWork) {
   }
 }
 
-function safelyDetachRef(current) {
-  const ref = current.ref;
-  if (ref.current !== null) {
-
-  } else {
-    ref.current = null;
-  }
-
-}
-
 // User-originating errors (lifecycles and refs) should not interrupt
 // deletion, so don't let them throw. Host-originating errors should
 // interrupt deletion, so it's okay

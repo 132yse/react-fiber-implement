@@ -1,5 +1,3 @@
-// @flow
-import type { FNode, FRoot } from './f-node';
 
 import {
   Root,
@@ -33,7 +31,6 @@ import {
 } from './commit-work';
 import { resetWiths } from './f-with';
 import { callLifeCycle } from './f-life-cycle';
-import { LinkedList } from '../structures/linked-list';
 const expireTime = 1;
 
 let nextUnitOfWork = null;
@@ -41,7 +38,7 @@ let nextEffect = null;
 
 let rootWithPendingPassiveEffects = null;
 
-export function scheduleWork(fnode: FNode): void {
+export function scheduleWork(fnode) {
   const root = getRootFromFnode(fnode);
   if (root === null) {
     // clone here
@@ -51,7 +48,7 @@ export function scheduleWork(fnode: FNode): void {
   requestIdleCallback(dl => performWork(dl, root))
 }
 
-function getRootFromFnode(fnode: FNode): FRoot {
+function getRootFromFnode(fnode) {
   let node = fnode;
   if (fnode !== null && node.tag === Root && node.return === null) {
     return fnode.instanceNode;
@@ -60,7 +57,7 @@ function getRootFromFnode(fnode: FNode): FRoot {
   return getRootFromFnode(node);
 }
 
-function performWork(dl: any, root: FRoot): void {
+function performWork(dl, root) {
   workLoop(dl, root);
   if (nextUnitOfWork) {
     requestIdleCallback(dl => performWork(dl, root));
@@ -74,7 +71,7 @@ function performWork(dl: any, root: FRoot): void {
   }
 }
 
-function workLoop(dl: any, root: FRoot): void {
+function workLoop(dl, root) {
   if (!nextUnitOfWork) {
     nextUnitOfWork = createWIP(root.current, null);
   }
@@ -83,7 +80,7 @@ function workLoop(dl: any, root: FRoot): void {
   }
 }
 
-function performUnitOfWork(WIP: FNode): FNode {
+function performUnitOfWork(WIP) {
   const current = WIP.alternate;
   let next;
   next = beginWork(current, WIP);
@@ -94,7 +91,7 @@ function performUnitOfWork(WIP: FNode): FNode {
   return next;
 }
 
-function completeUnitOfWork(WIP: FNode): FNode | null {
+function completeUnitOfWork(WIP) {
   // Attempt to complete the current unit of work, then move to the
   // next sibling. If there are no more siblings, return to the
   // parent fiber.
@@ -163,15 +160,15 @@ function completeUnitOfWork(WIP: FNode): FNode | null {
 }
 
 export function completeRoot(
-  root: FRoot,
-  finishedWork: FNode,
-): void {
+  root,
+  finishedWork,
+) {
   // Commit the root.
   root.finishedWork = null;
   commitRoot(root, finishedWork);
 }
 
-export function commitRoot(root: FRoot, finishedWork: FNode): void {
+export function commitRoot(root, finishedWork) {
   let firstEffect;
   const linkedList = finishedWork.linkedList;
 
@@ -237,7 +234,7 @@ export function commitRoot(root: FRoot, finishedWork: FNode): void {
   }
 }
 
-function commitPassiveEffects(root: FRoot, firstEffect: FNode): void {
+function commitPassiveEffects(root, firstEffect) {
   rootWithPendingPassiveEffects = null;
   let effect = firstEffect;
   do {

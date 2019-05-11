@@ -1,23 +1,14 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @flow
- */
-import type {StackCursor} from './stack';
+
 import {createCursor, push, pop} from './stack';
 
-declare class NoContextT {}
-const NO_CONTEXT: NoContextT = ({}: any);
+const NO_CONTEXT= {};
 
-let rootInstanceStackCursor: StackCursor<T> = createCursor(
+let rootInstanceStackCursor= createCursor(
   NO_CONTEXT,
 );
 
-function requiredContext<Value>(c: Value | NoContextT): Value {
-  return (c: any);
+function requiredContext (){
+  return c;
 }
 
 function getRootHostContainer() {

@@ -1,4 +1,3 @@
-import type { Fiber } from './Fiber';
 import { REACT_ELEMENT_TYPE } from '../core/h';
 import {
   createWIP,
@@ -14,7 +13,7 @@ import {
   Fragment,
 } from '../shared/Tag';
 import { isArray } from '../shared/validate';
-import { NoEffect, Placement, Deletion } from '../shared/effect-tag';
+import {Placement, Deletion } from '../shared/effect-tag';
 
 function ChildReconciler(shouldTrackSideEffects) {
   function deleteChild(returnFNode, childToDelete) {
@@ -213,7 +212,7 @@ function ChildReconciler(shouldTrackSideEffects) {
     // Add the remaining children to a temporary map so that we can find them by
     // keys quickly. Implicit (null) keys get added to this set with their index
     // instead.
-    const existingChildren: Map<string | number, Fiber> = new Map();
+    const existingChildren = new Map();
     let existingChild = currentFirstChild;
     while (existingChild !== null) {
           if (existingChild.key !== null) {

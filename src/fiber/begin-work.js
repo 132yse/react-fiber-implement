@@ -1,7 +1,5 @@
-import type {FNode} from 'f-node';
 
 import {Root, DNode, FComponent, Text, Fragment} from '../shared/tag';
-import { isObject } from '../shared/validate';
 import {PerformedWork} from '../shared/effect-tag';
 import {reconcileChildren, cloneChildFNodes} from './children';
 import {pushHostContainer} from './host-context';
@@ -12,11 +10,11 @@ import shallowEqual from '../shared/shallowEqual';
 
 // test
 
-export function saveProps(WIP: FNode, props: any): void {
+export function saveProps(WIP, props) {
   WIP.prevProps = props;
 }
 
-export function saveState(WIP: FNode, state: any): void {
+export function saveState(WIP, state) {
   WIP.prevState = state;
 }
 
@@ -29,12 +27,12 @@ function shouldSetTextContent(type, props) {
       && typeof props.dangerouslySetInnerHTML.__html === 'string';
 }
 
-function pushHostRootContext(WIP: FNode): void {
+function pushHostRootContext(WIP) {
   const root = WIP.instanceNode;
   pushHostContainer(WIP, root.containerInfo);
 }
 
-function updateRoot(current: FNode | null, WIP: FNode): FNode | null {
+function updateRoot(current, WIP) {
   pushHostRootContext(WIP);
 
   const rootRender = WIP.rootRender;
@@ -52,7 +50,7 @@ function updateRoot(current: FNode | null, WIP: FNode): FNode | null {
   return WIP.child;
 }
 
-function updateDomNode(current: FNode | null, WIP: FNode): FNode | null {
+function updateDomNode(current, WIP) {
 
   const type = WIP.type;
   const nextProps = WIP.props;
@@ -65,7 +63,7 @@ function updateDomNode(current: FNode | null, WIP: FNode): FNode | null {
   return WIP.child;
 }
 
-function updateFunctionComponent(current: FNode | null, WIP: FNode, status): FNode | null {
+function updateFunctionComponent(current, WIP, status) {
   const Component = WIP.type;
   const unresolvedProps = WIP.props;
   const nextProps = resolveDefaultProps(Component, unresolvedProps);
@@ -100,7 +98,7 @@ function updateFragment(current, WIP) {
   return WIP.child;
 }
 
-function resolveDefaultProps(Component: Function, baseProps: any) {
+function resolveDefaultProps(Component, baseProps) {
   if (Component && Component.defaultProps) {
     // Resolve default props. Taken from ReactElement
     const props = Object.assign({}, baseProps);
@@ -115,13 +113,7 @@ function resolveDefaultProps(Component: Function, baseProps: any) {
   return baseProps;
 }
 
-/**
-* @param {FNode} current
-* @param {FNode} WIP
-* @return {FNode | null}
-*/
-
-export function beginWork(current: FNode | null, WIP: FNode): FNode | null {
+export function beginWork(current, WIP) {
   const status = WIP.status;
   if (current !== null) {
     const oldProps = current.prevProps;

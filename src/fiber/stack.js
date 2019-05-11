@@ -1,32 +1,21 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @flow
- */
-export type StackCursor<T> = {
-  current: T,
-};
 
-const valueStack: Array<any> = [];
+const valueStack = [];
 
-let fiberStack: Array<any>;
+let fiberStack;
 
 let index = -1;
 
-function createCursor<T>(defaultValue: T): StackCursor<T> {
+function createCursor(defaultValue){
   return {
     current: defaultValue,
   };
 }
 
-function isEmpty(): boolean {
+function isEmpty() {
   return index === -1;
 }
 
-function pop<T>(cursor: StackCursor<T>, fiber): void {
+function pop(cursor, fiber) {
   if (index < 0) {
     return;
   }
@@ -37,7 +26,7 @@ function pop<T>(cursor: StackCursor<T>, fiber): void {
   index--;
 }
 
-function push<T>(cursor: StackCursor<T>, value: T, fiber): void {
+function push(cursor, value, fiber) {
   index++;
 
   valueStack[index] = cursor.current;
